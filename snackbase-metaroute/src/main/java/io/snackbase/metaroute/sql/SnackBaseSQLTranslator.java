@@ -1,12 +1,17 @@
 package io.snackbase.metaroute.sql;
 
 import com.alibaba.druid.sql.ast.SQLStatement;
-import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlStatementImpl;
+import com.alibaba.druid.sql.ast.statement.SQLCreateDatabaseStatement;
+import com.alibaba.druid.sql.ast.statement.SQLDropDatabaseStatement;
+import com.alibaba.druid.sql.ast.statement.SQLDropTableStatement;
+import com.alibaba.druid.sql.ast.statement.SQLSelectStatement;
+import com.alibaba.druid.sql.dialect.mysql.ast.statement.*;
+import com.alibaba.druid.sql.dialect.mysql.parser.MySqlSelectParser;
 import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
 
 /**
- * {@link SnackBaseSQLTranslator} translator sql language;default use MySQL,
+ * {@link SnackBaseSQLTranslator} translator sql language;default use MySQL sql language,
  * Not support other SQL
  * <p>
  * <p>
@@ -66,8 +71,7 @@ import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
  * =========================================================================
  * transaction
  *
- *
- * <code></code>
+ * <code>commit</code>
  * TODO   completed the transaction sql code
  * @see com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSetTransactionStatement
  * @since 1.0
@@ -76,9 +80,31 @@ final
 class SnackBaseSQLTranslator {
 
     public void translator(String sql) {
-
         MySqlStatementParser parser = new MySqlStatementParser(sql);
         SQLStatement sqlStatement = parser.parseStatement();
-        parser.parseAnalyze();
+
+        MySqlSchemaStatVisitor visitor = new MySqlSchemaStatVisitor();
+        sqlStatement.accept(visitor);
+
+        // database level
+        if (sqlStatement instanceof SQLDropDatabaseStatement) {
+
+        } else if (sqlStatement instanceof MySqlShowCreateDatabaseStatement) {
+
+        } else if (sqlStatement instanceof SQLCreateDatabaseStatement) {
+
+        } else if (sqlStatement instanceof MySqlCreateTableStatement) {
+
+        } else if (sqlStatement instanceof MySqlAlterTableAlterColumn) {
+
+        } else if (sqlStatement instanceof SQLDropTableStatement) {
+
+        } else if (sqlStatement instanceof SQLSelectStatement) {
+
+        } else if (sqlStatement instanceof MySqlDeleteStatement) {
+
+        } else if (sqlStatement instanceof MySqlSelectParser) {
+
+        }
     }
 }
