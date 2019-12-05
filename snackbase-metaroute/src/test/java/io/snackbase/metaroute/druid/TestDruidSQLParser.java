@@ -1,10 +1,15 @@
 package io.snackbase.metaroute.druid;
 
+import com.alibaba.druid.sql.SQLUtils;
+import com.alibaba.druid.sql.ast.SQLCommentHint;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlAnalyzeStatement;
 import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
+import com.alibaba.druid.util.JdbcConstants;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * {@link com.alibaba.druid.sql.ast.SQLObject}
@@ -21,7 +26,10 @@ public class TestDruidSQLParser {
         String sql = "SELECT sb1,sb2,sb3 FROM (SELECT s1 AS sb1, s2 AS sb2, s3*2 AS sb3 FROM t1) AS sb WHERE sb1 > 1";
 
         MySqlStatementParser sqlStatementParser = new MySqlStatementParser(sql);
+
+        // SQLStatement contain any data operation
         SQLStatement sqlStatement = sqlStatementParser.parseStatement();
+        System.err.println(sqlStatement);
 
         MySqlSchemaStatVisitor visitor = new MySqlSchemaStatVisitor();
         sqlStatement.accept(visitor);
@@ -84,5 +92,18 @@ public class TestDruidSQLParser {
         //
         MySqlAnalyzeStatement parseAnalyze = sqlStatementParser.parseAnalyze();
         System.err.println(parseAnalyze);
+    }
+
+    /**
+     * AST
+     */
+    @Test
+    public void testParserCreateDB(){
+        String sql = "create database bizproduce";
+        MySqlStatementParser sqlStatementParser = new MySqlStatementParser(sql);
+
+        // SQLStatement contain any data operation
+        SQLStatement sqlStatement = sqlStatementParser.parseStatement();
+        System.err.println(sqlStatement);
     }
 }
