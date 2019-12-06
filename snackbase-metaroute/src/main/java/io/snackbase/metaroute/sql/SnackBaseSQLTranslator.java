@@ -30,7 +30,6 @@ import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
  * {@link SQLStatement} has all create,drop,delete,update,alt,insert statement
  *
  * @author maxuefeng
- * @se
  * @see MySqlStatementImpl all MySQL statement paranet class
  * <p>
  * =======================================================================
@@ -79,6 +78,12 @@ import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
 final
 class SnackBaseSQLTranslator {
 
+    /**
+     * match operation level by SQLStatement instance
+     *
+     * @param sql sql string; if sql is error,will be throw an Exception
+     * @see SQLStatement
+     */
     public void translator(String sql) {
         MySqlStatementParser parser = new MySqlStatementParser(sql);
         SQLStatement sqlStatement = parser.parseStatement();

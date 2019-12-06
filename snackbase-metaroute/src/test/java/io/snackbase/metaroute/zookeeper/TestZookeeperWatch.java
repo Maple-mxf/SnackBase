@@ -22,7 +22,7 @@ public class TestZookeeperWatch {
     private String zkURL = "192.168.1.109:2181";
     private final String basePath = "/SnackBase";
     // private Logger logger = Logger.getLogger(TestZookeeperWatch.class);
-    private Logger logger = LoggerFactory.getLogger(TestZookeeperWatch.class);
+    private static Logger logger = LoggerFactory.getLogger(TestZookeeperWatch.class);
 
     class CommonWatcher implements Watcher {
         @Override
@@ -93,6 +93,51 @@ public class TestZookeeperWatch {
         List<String> children = client.getChildren(basePath, new CommonWatcher());
         children.forEach(System.err::println);
         Thread.sleep(10000000);
+    }
+
+    /**
+     * base path: /SnackBase
+     * base path metadata : /dbInfo
+     */
+    @Test
+    public void watchDBNode() throws IOException, KeeperException, InterruptedException {
+        ZooKeeper client = new ZooKeeper(zkURL, 150000, System.err::println);
+        Stat exists = client.exists(basePath + "/dbInfo", null);
+        if (exists == null) {
+            client.create(basePath + "/dbInfo", "dbInfo".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
+
+        client.getChildren(basePath + "/dbInfo", event -> logger.error("create database {} ", event.getWrapper().getPath()));
+        Thread.sleep(10000000L);
+    }
+
+    @Test
+    public void createDBNode() throws IOException, KeeperException, InterruptedException {
+        ZooKeeper client = new ZooKeeper(zkURL, 150000, System.err::println);
+        Stat exists = client.exists(basePath + "/dbInfo", null);
+        if (exists == null) {
+            client.create(basePath + "/dbInfo", "dbInfo".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
+
+        String ret = client.create(basePath + "/dbInfo/biz", "biz".getBytes(StandardCharsets.UTF_8),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+
+        logger.error("create database result {} ", ret);
+    }
+
+    @Test
+    public void createTableNode() throws IOException, KeeperException, InterruptedException {
+        ZooKeeper client = new ZooKeeper(zkURL, 150000, System.err::println);
+        Stat exists = client.exists(basePath + "/dbInfo/biz", null);
+        if (exists == null) {
+            client.create(basePath + "/dbInfo/biz", "biz".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
+
+        String ret = client.create(basePath + "/dbInfo/biz/users", "users".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL);
+
+        logger.error("create table node result {} ", ret);
+
     }
 
 }

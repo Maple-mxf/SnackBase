@@ -1,15 +1,10 @@
 package io.snackbase.metaroute.druid;
 
-import com.alibaba.druid.sql.SQLUtils;
-import com.alibaba.druid.sql.ast.SQLCommentHint;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlAnalyzeStatement;
 import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlSchemaStatVisitor;
-import com.alibaba.druid.util.JdbcConstants;
 import org.junit.Test;
-
-import java.util.List;
 
 /**
  * {@link com.alibaba.druid.sql.ast.SQLObject}

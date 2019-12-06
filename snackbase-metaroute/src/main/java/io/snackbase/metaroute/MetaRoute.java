@@ -40,9 +40,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @since 2019/12/5
  */
 public
-final class MetaRouteServer implements Watcher {
+final class MetaRoute implements Watcher {
 
-    private static Logger logger = LoggerFactory.getLogger(MetaRouteServer.class);
+    //
+    private static Logger logger = LoggerFactory.getLogger(MetaRoute.class);
 
     /**
      * storage all data node info (must be multi thread security)
@@ -105,10 +106,21 @@ final class MetaRouteServer implements Watcher {
      * @throws InterruptedException thread exception
      * @see org.apache.zookeeper.Watcher
      */
-    public MetaRouteServer(String zkConnectionString, List<ACL> aclList) throws IOException, KeeperException, InterruptedException {
+    public MetaRoute(String zkConnectionString, List<ACL> aclList) throws Exception {
         this.aclList = aclList;
         zooKeeper = new ZooKeeper(zkConnectionString, 5000, this);
 
+        // check node path
+        checkBasePath();
+
+        // load data
+        loadMetadata();
+
+        // registry route node info
+        registry();
+    }
+
+    private void checkBasePath() throws KeeperException, InterruptedException {
         // check is exist
         Stat exists = zooKeeper.exists(baseNodePath, System.err::println);
         if (exists != null) {
@@ -118,9 +130,17 @@ final class MetaRouteServer implements Watcher {
         else {
             zooKeeper.create(baseNodePath, "SnackBase".getBytes(), null, CreateMode.PERSISTENT);
         }
+        logger.info("check base path complete");
     }
 
-    public void loadMetadata() throws URISyntaxException, IOException {
+    /**
+     * @throws URISyntaxException db file or table file not found
+     * @throws IOException        read IO exception
+     * @see io.snackbase.metaroute.metadata.Metadata
+     * @see DBMetadata
+     * @see TableMetadata
+     */
+    private void loadMetadata() throws URISyntaxException, IOException {
         // data dir storage metadata dri
         // first level dir is db metadata
         // second level dir is table metadata
@@ -138,7 +158,7 @@ final class MetaRouteServer implements Watcher {
                         // load database info data
                         File dbFile = optional.get();
                         // read db file return the byte array
-                        byte[] dbBytes = MoreFiles.asByteSource(Paths.get(new URI(dbFile.getAbsolutePath())), StandardOpenOption.WRITE).read();
+                        byte[] dbBytes = MoreFiles.asByteSource(Paths.get(new URI(dbFile.getAbsolutePath())), StandardOpenOption.READ).read();
                         this.dbMetadata = KryoHelper.deserialization(dbBytes, DBMetadata.class);
 
                         // load table info data
@@ -152,9 +172,9 @@ final class MetaRouteServer implements Watcher {
                     }
                 }
             }
-            // load data completed
+            // load metadata data completed
+            logger.info("load metadata data completed");
         }
-
     }
 
     private void registry() throws Exception {

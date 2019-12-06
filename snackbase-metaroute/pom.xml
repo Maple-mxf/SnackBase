@@ -28,6 +28,19 @@
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.jopen</groupId>
+            <artifactId>jopen-json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.snackbase</groupId>
+            <artifactId>snackbase-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
