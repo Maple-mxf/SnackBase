@@ -1,4 +1,4 @@
-package io.snackbase.metaroute;
+package io.snackbase.common;
 
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;

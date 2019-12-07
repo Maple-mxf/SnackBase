@@ -1,4 +1,4 @@
-package io.snackbase.common.exception;
+package io.snackbase.common.util;
 
 import java.net.*;
 import java.util.Enumeration;
