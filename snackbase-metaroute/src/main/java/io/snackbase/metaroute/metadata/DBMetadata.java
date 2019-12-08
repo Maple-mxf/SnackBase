@@ -12,6 +12,12 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class DBMetadata implements Metadata {
     // storage multi database
-    public final Set<DatabaseInfo> databaseInfoList = new CopyOnWriteArraySet<>();
+    private final Set<DatabaseInfo> databaseInfoSet = new CopyOnWriteArraySet<>();
     public final static String FILE_SUFFIX = ".db";
+
+    public Set<DatabaseInfo> getDatabaseInfoSet() {
+        return databaseInfoSet;
+    }
+
+
 }

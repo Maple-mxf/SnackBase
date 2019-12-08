@@ -12,8 +12,27 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class TableMetadata implements Metadata {
     //
-    
+
     // storage table info
-    public Set<TableInfo> tableInfoList = new CopyOnWriteArraySet<>();
+    private Set<TableInfo> tableInfoSet = new CopyOnWriteArraySet<>();
+
+    private String dbName;
+
     public final static String FILE_SUFFIX = ".table";
+
+    public Set<TableInfo> getTableInfoSet() {
+        return tableInfoSet;
+    }
+
+    public void setTableInfoSet(Set<TableInfo> tableInfoSet) {
+        this.tableInfoSet = tableInfoSet;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
 }

@@ -63,7 +63,7 @@ class DataNodeInfo implements Serializable {
         public String toString() {
             return "MetaInfo{" +
                     "databaseInfoList=" + databaseInfoList +
-                    ", tableInfoList=" + tableInfoList +
+                    ", tableInfoSet=" + tableInfoList +
                     '}';
         }
     }
