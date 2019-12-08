@@ -2,8 +2,6 @@ package io.snackbase.common.registrants;
 
 import com.google.common.base.Joiner;
 import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,6 +69,7 @@ public class BaseZKPathRegistrants extends Registrants {
     /**
      * init base path zookeeper node
      */
+    @Override
     public void initializationBasePath() throws Exception {
         registry(SNACK_BASE_ROOT_PATH, SNACK_BASE_ROOT_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
         registry(META_NODE_BASE_PATH, META_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
@@ -79,13 +78,5 @@ public class BaseZKPathRegistrants extends Registrants {
         registry(REPLICA_DATA_NODE_BASE_PATH, REPLICA_DATA_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
     }
 
-    private void registry(String path, byte[] data, CreateMode createMode) throws KeeperException, InterruptedException {
-        // check is exist
-        Stat exists = zkClient.exists(path, System.err::println);
-        if (exists == null) {
-            zkClient.create(path, data, null, createMode);
-        }
-        logger.info("check base path complete");
-    }
 
 }
