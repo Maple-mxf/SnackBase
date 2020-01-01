@@ -71,11 +71,12 @@ public class BaseZKPathRegistrants extends Registrants {
      */
     @Override
     public void initializationBasePath() throws Exception {
+        logger.info("create zookeeper base path node");
         registry(SNACK_BASE_ROOT_PATH, SNACK_BASE_ROOT_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
-        registry(META_NODE_BASE_PATH, META_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
-        registry(DB_BASE_PATH, DB_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
-        registry(DATA_NODE_BASE_PATH, DATA_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
-        registry(REPLICA_DATA_NODE_BASE_PATH, REPLICA_DATA_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT_SEQUENTIAL);
+        registry(META_NODE_BASE_PATH, META_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
+        registry(DB_BASE_PATH, DB_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
+        registry(DATA_NODE_BASE_PATH, DATA_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
+        registry(REPLICA_DATA_NODE_BASE_PATH, REPLICA_DATA_NODE_BASE_PATH.getBytes(StandardCharsets.UTF_8), CreateMode.PERSISTENT);
     }
 
 

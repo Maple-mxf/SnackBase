@@ -207,7 +207,7 @@ public class DBRegistrants extends Registrants {
         @Override
         public void process(WatchedEvent event) {
             String[] pathArray = event.getPath().split("/");
-            String dbName = pathArray[pathArray.length - 1];
+            String tableName = pathArray[pathArray.length - 1];
 
             // if delete any node
             if (event.getType().equals(Event.EventType.NodeDeleted)) {

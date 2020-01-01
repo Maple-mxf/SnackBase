@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public abstract class Registrants {
     /**
      * @see ACL
      */
-    protected List<ACL> aclList = new ArrayList<>();
+    protected List<ACL> aclList=null;
 
     public Registrants() throws IOException {
     }
@@ -38,10 +37,18 @@ public abstract class Registrants {
         // check is exist
         Stat exists = zkClient.exists(path, System.err::println);
         if (exists == null) {
-            zkClient.create(path, data, null, createMode);
+            zkClient.create(path, data, aclList, createMode);
         }
         logger.info("check base path complete");
     }
 
     public abstract void initializationBasePath() throws Exception;
+
+    public List<ACL> getAclList() {
+        return aclList;
+    }
+
+    public void setAclList(List<ACL> aclList) {
+        this.aclList = aclList;
+    }
 }

@@ -12,10 +12,7 @@
     <artifactId>snackbase-proxy</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -45,6 +42,12 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.snackbase</groupId>
+            <artifactId>snackbase-protocol</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

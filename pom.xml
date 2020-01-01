@@ -11,7 +11,9 @@
     <modules>
         <module>snackbase-metaroute</module>
         <module>snackbase-datanode</module>
-        <module>snackbase-util</module>
+        <module>snackbase-common</module>
+        <module>snackbase-proxy</module>
+        <module>snackbase-protocol</module>
     </modules>
 
     <properties>
@@ -21,6 +23,7 @@
         <zookeeper.version>3.4.14</zookeeper.version>
         <fastjson.version>1.2.62</fastjson.version>
         <common-lang3.version>3.9</common-lang3.version>
+        <netty.version>4.1.42.Final</netty.version>
     </properties>
 
     <dependencyManagement>
@@ -40,6 +43,11 @@
                 <artifactId>jopen-json</artifactId>
                 <version>1.0</version>
             </dependency>
+<!--            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
