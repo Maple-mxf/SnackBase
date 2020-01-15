@@ -20,7 +20,6 @@ public class FrontHandler extends ChannelInitializer<SocketChannel> {
             // ch.pipeline()
 
         ch.pipeline().addLast(new MySQLPacketDecoder());
-        ch.pipeline().addLast()
     }
 
 

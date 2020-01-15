@@ -1,6 +1,3 @@
-/*
- * Copyright (C) 2016 alchemystar, Inc. All Rights Reserved.
- */
 package io.snackbase.protocol.common.net.codec;
 
 import io.netty.buffer.ByteBuf;

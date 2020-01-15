@@ -118,11 +118,11 @@ public class CharsetUtil {
         CHARSET_TO_INDEX.put("utf-8", 33);
     }
 
-    public static final String getCharset(int index) {
+    public static String getCharset(int index) {
         return INDEX_TO_CHARSET[index];
     }
 
-    public static final int getIndex(String charset) {
+    public static int getIndex(String charset) {
         if (charset == null || charset.length() == 0) {
             return 0;
         } else {

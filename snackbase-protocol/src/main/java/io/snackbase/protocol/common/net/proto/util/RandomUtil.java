@@ -27,7 +27,7 @@ public class RandomUtil {
         seed = s;
     }
 
-    public static final byte[] randomBytes(int size) {
+    public static byte[] randomBytes(int size) {
         byte[] bb = bytes;
         byte[] ab = new byte[size];
         for (int i = 0; i < size; i++) {

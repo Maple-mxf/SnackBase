@@ -10,20 +10,56 @@ import io.snackbase.protocol.common.net.proto.MySQLPacket;
 import io.snackbase.protocol.common.net.proto.util.BufferUtil;
 
 /**
- * MySql握手包
- * @Author lizhuyang
+ * MySQL握手包
+ *
+ * @author maxuefeng
  */
 public class HandshakePacket extends MySQLPacket {
 
-    private static final byte[] FILLER_13 = new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static final byte[] FILLER_13 = new byte[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+    /**
+     * <pre>必选字段</pre>
+     * 协议版本
+     */
     public byte protocolVersion;
+
+    /**
+     * <pre>必选字段</pre>
+     * 服务端版本
+     */
     public byte[] serverVersion;
+
+    /**
+     * <pre>必选字段</pre>
+     * 线程ID
+     */
     public long threadId;
+
+    /**
+     * <pre>必选字段</pre>
+     * 随机数据
+     */
     public byte[] seed;
+
+    /**
+     * 服务器性能指标
+     */
     public int serverCapabilities;
+
+    /**
+     *
+     */
     public byte serverCharsetIndex;
+
+    /**
+     * 服务器状态
+     */
     public int serverStatus;
+
+    /**
+     *
+     */
     public byte[] restOfScrambleBuff;
 
     public void read(BinaryPacket bin) {
@@ -42,8 +78,10 @@ public class HandshakePacket extends MySQLPacket {
     }
 
     public void write(final ChannelHandlerContext ctx) {
+
         // default init 256,so it can avoid buff extract
         final ByteBuf buffer = ctx.alloc().buffer();
+
         BufferUtil.writeUB3(buffer, calcPacketSize());
         buffer.writeByte(packetId);
         buffer.writeByte(protocolVersion);

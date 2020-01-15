@@ -3,14 +3,12 @@ package io.snackbase.proxy.server;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.snackbase.protocol.common.net.handler.frontend.FrontendCommandHandler;
 import io.snackbase.protocol.common.net.proto.mysql.AuthPacket;
 import io.snackbase.protocol.common.net.proto.mysql.BinaryPacket;
 import io.snackbase.protocol.common.net.proto.mysql.HandshakePacket;
 import io.snackbase.protocol.common.net.proto.mysql.OkPacket;
 import io.snackbase.protocol.common.net.proto.util.*;
 
-import java.net.InetSocketAddress;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -48,9 +46,10 @@ public class FrontAuthChannelHandler extends ChannelHandlerAdapter {
         hs.serverVersion = Versions.SERVER_VERSION;
         // TODO  测试使用
         hs.threadId = 1111L;
+        // Thread.currentThread().getId()
         hs.seed = rand1;
         hs.serverCapabilities = getServerCapabilities();
-        hs.serverCharsetIndex = (byte) (source.charsetIndex & 0xff);
+         //hs.serverCharsetIndex = (byte) (source.charsetIndex & 0xff);
         hs.serverStatus = 2;
         hs.restOfScrambleBuff = rand2;
         hs.write(ctx);
@@ -66,17 +65,22 @@ public class FrontAuthChannelHandler extends ChannelHandlerAdapter {
             failure(ErrorCode.ER_ACCESS_DENIED_ERROR, "Access denied for user '" + authPacket.user + "'");
             return;
         }
-        source.setUser(authPacket.user);
-        source.setSchema(authPacket.database);
-        source.setHost(((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress());
-        source.setPort(((InetSocketAddress) ctx.channel().remoteAddress()).getPort());
+        // source.setUser(authPacket.user);
+        // source.setSchema(authPacket.database);
+        // source.setHost(((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().getHostAddress());
+        // source.setPort(((InetSocketAddress) ctx.channel().remoteAddress()).getPort());
         success(ctx);
+    }
 
+    public static void main(String[] args) {
+        FrontAuthChannelHandler frontAuthChannelHandler = new FrontAuthChannelHandler();
+        int serverCapabilities = frontAuthChannelHandler.getServerCapabilities();
+        System.err.println(serverCapabilities);
     }
 
     private void success(final ChannelHandlerContext ctx) {
         // AUTH_OK , process command
-        ctx.pipeline().replace(this, "frontCommandHandler", new FrontendCommandHandler(source));
+        // ctx.pipeline().replace(this, "frontCommandHandler", new FrontendCommandHandler(source));
         // AUTH_OK is stable
         ByteBuf byteBuf = ctx.alloc().buffer().writeBytes(OkPacket.AUTH_OK);
         // just io , no need thread pool
@@ -125,7 +129,7 @@ public class FrontAuthChannelHandler extends ChannelHandlerAdapter {
         try {
             encryptPass = SecurityUtil.scramble411(pass.getBytes(), seed);
         } catch (NoSuchAlgorithmException e) {
-            logger.warn(source.toString(), e);
+            // logger.warn(source.toString(), e);
             return false;
         }
         if (encryptPass != null && (encryptPass.length == password.length)) {
@@ -143,7 +147,7 @@ public class FrontAuthChannelHandler extends ChannelHandlerAdapter {
     }
 
     protected void failure(int errno, String info) {
-        logger.error(source.toString() + info);
-        source.writeErrMessage((byte) 2, errno, info);
+        // logger.error(source.toString() + info);
+        // source.writeErrMessage((byte) 2, errno, info);
     }
 }

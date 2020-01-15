@@ -3,7 +3,8 @@
  */
 package io.snackbase.protocol.parser;
 
-import alchemystar.lancelot.parser.util.ParseUtil;
+
+import io.snackbase.protocol.parser.util.ParseUtil;
 
 /**
  * ServerParse

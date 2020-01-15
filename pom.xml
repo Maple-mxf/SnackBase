@@ -14,6 +14,8 @@
         <module>snackbase-common</module>
         <module>snackbase-proxy</module>
         <module>snackbase-protocol</module>
+        <module>snackbase-test</module>
+        <module>snackbase-logging</module>
     </modules>
 
     <properties>

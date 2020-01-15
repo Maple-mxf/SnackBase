@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author maxuefeng
  * @see TableInfo
  * @since 2019/12/6
+ * @see java.util.concurrent.Future
  */
 public class TableMetadata implements Metadata {
     //

@@ -10,9 +10,9 @@ import io.netty.channel.ChannelHandlerContext;
 import java.nio.ByteBuffer;
 
 /**
- * MySqlPacket
+ * MySQLPacket
  *
- * @Author lizhuyang
+ * @author maxuefeng
  */
 public abstract class MySQLPacket {
 
@@ -169,10 +169,10 @@ public abstract class MySQLPacket {
     /**
      * MORE RESULTS
      */
-    public static final int SERVER_MORE_RESULTS_EXISTS=8;
+    public static final int SERVER_MORE_RESULTS_EXISTS = 8;
 
     public int packetLength;
-    public byte packetId=1;
+    public byte packetId = 1;
 
     /**
      * 把数据包写到buffer中，如果buffer满了就把buffer通过前端连接写出。
@@ -188,7 +188,7 @@ public abstract class MySQLPacket {
         throw new UnsupportedOperationException();
     }
 
-    public ByteBuf writeBuf(ByteBuf buffer,ChannelHandlerContext ctx) {
+    public ByteBuf writeBuf(ByteBuf buffer, ChannelHandlerContext ctx) {
         throw new UnsupportedOperationException();
     }
 
@@ -204,8 +204,8 @@ public abstract class MySQLPacket {
 
     @Override
     public String toString() {
-        return new StringBuilder().append(getPacketInfo()).append("{length=").append(packetLength).append(",id=")
-                .append(packetId).append('}').toString();
+        return getPacketInfo() + "{length=" + packetLength + ",id=" +
+                packetId + '}';
     }
 
 }

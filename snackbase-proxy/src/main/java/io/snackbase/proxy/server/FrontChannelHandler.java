@@ -10,8 +10,10 @@ import io.snackbase.protocol.common.net.codec.MySqlPacketDecoder;
  */
 public class FrontChannelHandler extends ChannelInitializer<SocketChannel> {
 
+    /**
+     * @param ch
+     */
     protected void initChannel(SocketChannel ch) {
         ch.pipeline().addLast(new MySqlPacketDecoder());
-        // ch.pipeline().addLast()
     }
 }
