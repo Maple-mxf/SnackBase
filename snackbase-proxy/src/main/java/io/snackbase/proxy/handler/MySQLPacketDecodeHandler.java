@@ -1,4 +1,4 @@
-package io.snackbase.proxy;
+package io.snackbase.proxy.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author maxuefeng
  * @since 2019/12/29
  */
-public class MySQLPacketDecoder extends ByteToMessageDecoder {
+public class MySQLPacketDecodeHandler extends ByteToMessageDecoder {
 
     private static final Logger logger = LoggerFactory.getLogger(MySqlPacketDecoder.class);
 
